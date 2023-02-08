@@ -1,0 +1,22 @@
+{
+  "name": "changelog-tool",
+  "version": "0.1.0",
+  "description": "A CLI tool for manipulating changelogs",
+  "main": "index.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "changelog",
+    "markdown"
+  ],
+  "author": "Evert Pot (https://evertpot.com/)",
+  "license": "MIT",
+  "engine": {
+    "node": ">18"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.19",
+    "typescript": "^4.9.5"
+  }
+}
