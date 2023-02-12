@@ -62,7 +62,7 @@ export function wrap(input, secondLineOffset = 0, lineLength = 79) {
     }
 
     const maxLength = lines.length > 1 ? lineLength - secondLineOffset : lineLength;
-    
+
     const potentialNewLine = [lines.at(-1),word].join(' ');
     if (potentialNewLine.length>maxLength) {
       lines.push(word);
@@ -72,5 +72,39 @@ export function wrap(input, secondLineOffset = 0, lineLength = 79) {
 
   }
   return lines.join('\n' + ' '.repeat(secondLineOffset));
+
+}
+
+/**
+ * @param {string} prevVersion
+ * @param {'patch'|'minor'|'major'} changeType
+ * @returns {string}
+ */
+export function calculateNextVersion(prevVersion, changeType = 'patch') {
+
+  // This function only currently understands 1 format, but this may change
+  // in the future.
+  if (!prevVersion.match(/^[0-9]+\.[0-9]+\.[0-9]+$/)) {
+    throw new Error(`Could not automatically determine the next ${changeType} version from ${prevVersion}. You might want to request a new feature to support this`);
+  }
+
+  const parts = prevVersion.split('.').map( part => +part);
+
+  switch(changeType) {
+    case 'major' :
+      parts[0]++;
+      parts[1]=0;
+      parts[2]=0;
+      break;
+    case 'minor' :
+      parts[1]++;
+      parts[2]=0;
+      break;
+    case 'patch' :
+      parts[2]++;
+      break;
+  }
+
+  return parts.join('.');
 
 }

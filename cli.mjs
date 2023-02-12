@@ -3,7 +3,7 @@
 import { parseArgs } from 'node:util';
 import * as fs from 'node:fs/promises';
 import * as url from 'node:url';
-import { readPackageVersion, exists } from './util.mjs';
+import { readPackageVersion, exists, calculateNextVersion } from './util.mjs';
 import { Changelog, VersionLog, LogItem } from './changelog.mjs';
 import { parseFile } from './parse.mjs';
 
@@ -31,6 +31,23 @@ async function main() {
         default: false,
         description: 'Show all versions',
       },
+      message: {
+        type: 'string',
+        description: 'Changelog message',
+        short: 'm'
+      },
+      patch: {
+        type: 'boolean',
+        description: 'Indicates that the current change is a patch-level change.',
+      },
+      minor: {
+        type: 'boolean',
+        description: 'Indicates that the current change is a minor change.',
+      },
+      major: {
+        type: 'boolean',
+        description: 'Indicates that the current change is a major change.',
+      },
     },
     allowPositionals: true,
   });
@@ -52,10 +69,21 @@ async function main() {
       await init();
       break;
     case 'add' :
-      if (positionals.length < 2) {
-        throw new Error('The "message" argument must be specified with the "add" command');
+      /** @type {'major' | 'minor' | 'patch'} */
+      let changeType = 'patch';
+      if (values.minor) {
+        changeType = 'minor';
       }
-      await add(positionals.slice(1).join(' '));
+      if (values.major) {
+        changeType = 'major';
+      }
+      if (!values.message) {
+        throw new Error('The "-m" or "-message" argument is required');
+      }
+      await add({
+        message: values.message,
+        changeType,
+      });
       break;
     case 'release' :
       await release();
@@ -92,13 +120,13 @@ Manipulate your changelog file
 
 Usage:
 
-  changelog init           - Create a new, empty changelog.
-  changelog add [message]  - Adds a new line to the changelog.
-  changelog release        - Marks the current changelog as released.
-  changelog show           - Show the last changelog.
-  changelog show [version] - Show the changelog of a specific version.
-  changelog list           - List all versions in the changelog.
-  changelog format         - Reformats the changelog in the standard format.
+  changelog init             - Create a new, empty changelog.
+  changelog add -m [message] - Adds a new line to the changelog.
+  changelog release          - Marks the current changelog as released.
+  changelog show             - Show the last changelog.
+  changelog show [version]   - Show the changelog of a specific version.
+  changelog list             - List all versions in the changelog.
+  changelog format           - Reformats the changelog in the standard format.
 
 The logs this tool uses follows a specific markdown format. Currently it will
 only look for a file named 'changelog.md' in the current directory.
@@ -170,16 +198,28 @@ async function format() {
 }
 
 /**
- * @param {string} message
+ * @param {Object} options
+ * @param {string} options.message
+ * @param {'patch'|'major'|'minor'} options.changeType
  */
-async function add(message) {
+async function add({message, changeType}) {
   const changelog = await parseChangelog();
 
   let lastVersion = changelog.versions[0];
   if (lastVersion.date) {
-    lastVersion = changelog.newVersion();
+    lastVersion = changelog.newVersion(changeType);
     console.log('Creating new version: %s', lastVersion.version);
+  } else {
+    if (changeType === 'minor' || changeType === 'major') {
+      const previousVersion = changelog.versions[1];
+      const updatedVersionStr = calculateNextVersion(previousVersion.version, changeType);
+      if (updatedVersionStr !== lastVersion.version) {
+        console.log('Updating unreleased version from %s to %s', lastVersion.version, updatedVersionStr);
+        lastVersion.version = updatedVersionStr;
+      }
+    }
   }
+
   lastVersion.add(message);
 
   await fs.writeFile(filename, changelog.toString());
