@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.2.0 (????-??-??)
+------------------
+
+* Implemented the 'list' command.
+* Added testing framework based on node:test.
+
+
 0.1.0 (2023-02-08)
 ------------------
 

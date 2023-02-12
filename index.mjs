@@ -4,6 +4,7 @@ import * as fs from 'node:fs/promises';
 import * as url from 'node:url';
 import { readPackageVersion, exists } from './util.mjs';
 import { Changelog, VersionLog, LogItem } from './changelog.mjs';
+import { parseFile } from './parse.mjs';
 
 const filename = 'changelog.md';
 
@@ -113,3 +114,16 @@ async function init() {
 
 }
 
+async function list() {
+
+  if (!await exists(filename)) {
+    throw new Error(`${filename} not found in current directory`);
+  }
+
+  const changelog = await parseFile(filename);
+
+  for(const version of changelog.versions) {
+    console.log(version.version);
+  }
+
+}
