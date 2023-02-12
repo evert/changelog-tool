@@ -54,7 +54,7 @@ test('Parsing changelog entries', async () => {
 
   const latest = result.get('0.2.0');
   assert.equal(2, latest.items.length);
-  assert.equal('Implemented the \'list\' command', latest.items[0].message);
+  assert.equal('Implemented the \'list\' command.', latest.items[0].message);
 
 
 });

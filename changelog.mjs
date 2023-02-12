@@ -88,9 +88,12 @@ export class VersionLog {
 
   /**
    * @param {string} message
+   * @returns {LogItem}
    */
   add(message) {
-    this.items.push(new LogItem(message));
+    const item = new LogItem(message);
+    this.items.push(item);
+    return item;
   }
 
   toString() {
