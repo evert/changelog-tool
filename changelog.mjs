@@ -33,6 +33,22 @@ export class Changelog {
 
   }
 
+  /**
+   * Finds a VersionLog by its version string
+   *
+   * @param {string} version
+   * @returns {VersionLog}
+   */
+  get(version) {
+
+    const log = this.versions.find( myLog => myLog.version === version);
+    if (!log) {
+      throw new Error(`Couldn't find version ${version} in the changelog`);
+    }
+    return log;
+
+  }
+
 }
 
 export class VersionLog {

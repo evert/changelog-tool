@@ -25,6 +25,11 @@ async function main() {
         default: false,
         description: 'This help screen',
       },
+      all: {
+        type: 'boolean',
+        default: false,
+        description: 'Show all versions',
+      },
     },
     allowPositionals: true,
   });
@@ -52,10 +57,10 @@ async function main() {
     case 'release' :
       await release();
       break;
-    case 'show' :
-      await show();
-      break;
       */
+    case 'show' :
+      await show({ all: !!values.all, version: positionals[1]});
+      break;
     case 'list' :
       await list();
       break;
@@ -118,14 +123,52 @@ async function init() {
 
 async function list() {
 
-  if (!await exists(filename)) {
-    throw new Error(`${filename} not found in current directory`);
-  }
-
-  const changelog = await parseFile(filename);
+  const changelog = await parseChangelog();
 
   for(const version of changelog.versions) {
     console.log(version.version);
   }
+
+}
+
+/**
+ * @param {Object} showOptions
+ * @param {boolean} showOptions.all Show all versions
+ * @param {string?} showOptions.version show a specific version
+ */
+async function show({all, version}) {
+
+  const changelog = await parseChangelog();
+
+  let toRender;
+  if (all) {
+    toRender = changelog.versions;
+  } else if (version) {
+    toRender = [changelog.get(version)];
+  } else {
+    toRender = [changelog.versions[0]];
+  }
+
+  console.log(
+    toRender
+      .map( log => log.toString())
+      .join('\n\n')
+  );
+
+}
+
+
+
+
+/**
+ * @returns {Promise<Changelog>}
+ */
+async function parseChangelog() {
+
+  if (!await exists(filename)) {
+    throw new Error(`${filename} not found in current directory`);
+  }
+
+  return await parseFile(filename);
 
 }
