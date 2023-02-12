@@ -45,6 +45,7 @@ async function main() {
     case 'init' :
       await init();
       break;
+      /*
     case 'add' :
       await add();
       break;
@@ -54,6 +55,7 @@ async function main() {
     case 'show' :
       await show();
       break;
+      */
     case 'list' :
       await list();
       break;
