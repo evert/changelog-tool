@@ -56,11 +56,9 @@ async function main() {
       }
       await add(positionals.slice(1).join(' '));
       break;
-      /*
     case 'release' :
       await release();
       break;
-      */
     case 'format' :
       await format();
       break;
@@ -185,6 +183,20 @@ async function add(message) {
 
   await fs.writeFile(filename, changelog.toString());
   console.log(`${changelog.versions.length} changelogs saved to ${filename}`);
+}
+
+async function release() {
+  const changelog = await parseChangelog();
+
+  let lastVersion = changelog.versions[0];
+  if (lastVersion.date) {
+    throw new Error(`Previous version "${lastVersion.version}" already had a release date`);
+  }
+  lastVersion.date = new Date().toISOString().substr(0,10);
+  console.log(`Releasing ${lastVersion.version}`);
+  await fs.writeFile(filename, changelog.toString());
+  console.log(`${changelog.versions.length} changelogs saved to ${filename}`);
+
 }
 
 /**
