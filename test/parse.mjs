@@ -58,3 +58,37 @@ test('Parsing changelog entries', async () => {
 
 
 });
+
+test('Preface and postface', async () => {
+
+  const input = `Time for a change
+=========
+
+0.2.0 (????-??-??)
+------------------
+
+WOW another release. How good is that?
+Here's another line.
+
+* Implemented the 'list' command.
+* Added testing framework.
+
+Well, that's all folks.
+
+0.1.0 (2023-02-08)
+------------------
+
+* Implemented the 'help' and 'init' commands.
+*
+`;
+
+  debugger;
+  const result = await parse(input);
+
+  const latest = result.get('0.2.0');
+
+  assert.equal('WOW another release. How good is that? Here\'s another line.', latest.preface);
+  assert.equal('Well, that\'s all folks.', latest.postface);
+
+
+});

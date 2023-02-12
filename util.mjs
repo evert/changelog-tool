@@ -49,7 +49,7 @@ export async function readPackageVersion() {
  * @param {number} secondLineOffset
  * @param {number} lineLength
  */
-export function wrap(input, secondLineOffset = 0, lineLength = 80) {
+export function wrap(input, secondLineOffset = 0, lineLength = 79) {
 
   const words = input.split(' ');
   const lines = [];

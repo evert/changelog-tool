@@ -16,8 +16,7 @@ export class Changelog {
       this.title + '\n' +
       ('='.repeat(this.title.length)) + '\n' +
       '\n' +
-      this.versions.map(version => version.toString()).join('\n\n') +
-      '\n'
+      this.versions.map(version => version.toString()).join('\n\n')
     );
 
   }
@@ -26,10 +25,36 @@ export class Changelog {
    * Adds a new Version log
    *
    * @param version {VersionLog}
+   * @returns {VersionLog}
    */
   add(version) {
 
-    this.versions.push(version);
+    this.versions = [version, ...this.versions];
+    return version;
+
+  }
+
+  /**
+   * Adds a new version to the log. Version string is automatically increased
+   * from the previous one
+   *
+   * @returns {VersionLog}
+   */
+  newVersion() {
+
+    const lastVersionStr = this.versions[0].version;
+    const lastVersionParts = lastVersionStr.split('.');
+    if (!lastVersionParts.at(-1)?.match(/^[0-9]+$/)) {
+      throw new Error(`Could not automatically determine the next version string after "${lastVersionStr}"`);
+    }
+    const newVersionStr = [
+      ...lastVersionParts.slice(0, -1),
+      // @ts-ignore-error 'Possibly udefined', but we know it isnt
+      parseInt(lastVersionParts.at(-1)) + 1
+    ].join('.');
+    const versionLog = new VersionLog(newVersionStr);
+
+    return this.add(versionLog);
 
   }
 
@@ -52,7 +77,7 @@ export class Changelog {
 }
 
 export class VersionLog {
-  
+
   /**
    * @type {string}
    */
@@ -102,11 +127,11 @@ export class VersionLog {
     return (
       title + '\n' +
       ('-'.repeat(title.length)) + '\n' +
-      (this.preface ? wrap(this.preface) + '\n' : '') +
+      (this.preface ? '\n' + wrap(this.preface) : '') +
       '\n' +
       this.items.map(version => version.toString()).join('\n') +
       '\n' +
-      (this.postface ? wrap(this.postface) + '\n' : '')
+      (this.postface ? '\n' + wrap(this.postface) + '\n' : '')
     );
 
   }
