@@ -1,4 +1,4 @@
-import { wrap } from './util.mjs';
+import { calculateNextVersion, wrap } from './util.mjs';
 
 // @ts-check
 export class Changelog {
@@ -38,21 +38,14 @@ export class Changelog {
    * Adds a new version to the log. Version string is automatically increased
    * from the previous one
    *
+   * @params {'patch'|'minor'|'major'} changeType
    * @returns {VersionLog}
    */
-  newVersion() {
+  newVersion(changeType = 'patch') {
 
-    const lastVersionStr = this.versions[0].version;
-    const lastVersionParts = lastVersionStr.split('.');
-    if (!lastVersionParts.at(-1)?.match(/^[0-9]+$/)) {
-      throw new Error(`Could not automatically determine the next version string after "${lastVersionStr}"`);
-    }
-    const newVersionStr = [
-      ...lastVersionParts.slice(0, -1),
-      // @ts-ignore-error 'Possibly udefined', but we know it isnt
-      parseInt(lastVersionParts.at(-1)) + 1
-    ].join('.');
-    const versionLog = new VersionLog(newVersionStr);
+    const lastVersion = this.versions[0].version;
+    const newVersion = calculateNextVersion(lastVersion);
+    const versionLog = new VersionLog(newVersion);
 
     return this.add(versionLog);
 
