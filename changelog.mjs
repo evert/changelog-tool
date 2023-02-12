@@ -22,6 +22,17 @@ export class Changelog {
 
   }
 
+  /**
+   * Adds a new Version log
+   *
+   * @param version {VersionLog}
+   */
+  add(version) {
+
+    this.versions.push(version);
+
+  }
+
 }
 
 export class VersionLog {
