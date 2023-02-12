@@ -22,6 +22,13 @@ current working directory. This is a markdown file that looks like this:
 
 Questionmarks for the date indicate an unreleased version.
 
+Installation
+------------
+
+```sh
+npm install changelog-tool --save-dev
+```
+
 CLI
 ---
 
@@ -29,13 +36,13 @@ To tool can be used programmatically and with the CLI. The CLI has the
 following commands:
 
 ```
-changelog init           - Create a new, empty changelog.
-changelog add [message]  - Adds a new line to the changelog.
-changelog release        - Marks the current changelog as released.
-changelog show           - Show the last changelog.
-changelog show [version] - Show the changelog of a specific version.
-changelog list           - List all versions in the changelog.
-changelog format         - Reformats the changelog in the standard format.
+npx changelog init           - Create a new, empty npx changelog.
+npx changelog add [message]  - Adds a new line to the npx changelog.
+npx changelog release        - Marks the current npx changelog as released.
+npx changelog show           - Show the last npx changelog.
+npx changelog show [version] - Show the npx changelog of a specific version.
+npx changelog list           - List all versions in the npx changelog.
+npx changelog format         - Reformats the npx changelog in the standard format.
 ```
 
 Feature requests and bug reports are welcome.
