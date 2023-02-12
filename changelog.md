@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.5.0 (????-??-??)
+0.5.0 (2023-02-12)
 ------------------
 
 * Support changing the version to the next major/minor using the `--major` and
