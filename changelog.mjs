@@ -16,8 +16,7 @@ export class Changelog {
       this.title + '\n' +
       ('='.repeat(this.title.length)) + '\n' +
       '\n' +
-      this.versions.map(version => version.toString()).join('\n\n') +
-      '\n'
+      this.versions.map(version => version.toString()).join('\n\n')
     );
 
   }
@@ -102,11 +101,11 @@ export class VersionLog {
     return (
       title + '\n' +
       ('-'.repeat(title.length)) + '\n' +
-      (this.preface ? wrap(this.preface) + '\n' : '') +
+      (this.preface ? '\n' + wrap(this.preface) : '') +
       '\n' +
       this.items.map(version => version.toString()).join('\n') +
       '\n' +
-      (this.postface ? wrap(this.postface) + '\n' : '')
+      (this.postface ? '\n' + wrap(this.postface) + '\n' : '')
     );
 
   }

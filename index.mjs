@@ -58,6 +58,9 @@ async function main() {
       await release();
       break;
       */
+    case 'format' :
+      await format();
+      break;
     case 'show' :
       await show({ all: !!values.all, version: positionals[1]});
       break;
@@ -93,6 +96,7 @@ Usage:
   changelog show           - Show the last changelog.
   changelog show [version] - Show the changelog of a specific version.
   changelog list           - List all versions in the changelog.
+  changelog format         - Reformats the changelog in the standard format.
 
 The logs this tool uses follows a specific markdown format. Currently it will
 only look for a file named 'changelog.md' in the current directory.
@@ -157,7 +161,11 @@ async function show({all, version}) {
 
 }
 
-
+async function format() {
+  const changelog = await parseChangelog();
+  await fs.writeFile(filename, changelog.toString());
+  console.log(`${changelog.versions.length} changelogs saved to ${filename}`);
+}
 
 
 /**
@@ -172,3 +180,4 @@ async function parseChangelog() {
   return await parseFile(filename);
 
 }
+

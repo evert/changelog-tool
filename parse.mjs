@@ -69,8 +69,25 @@ export function parse(changelogInput) {
       changelog.add(versionLog);
       lastVersionLog = versionLog;
       lastBullet = null;
+      idx++;
+      continue;
 
     }
+
+    if (line.trim()==='') {
+      continue;
+    }
+
+    if (!lastVersionLog) {
+      throw new Error(`Parse error: unexpected string on line ${line+1}`);
+    }
+    // If we got here, this is either a loose preface or postface line.
+    if (lastBullet) {
+      lastVersionLog.postface = lastVersionLog.postface ? lastVersionLog.postface + ' ' + line : line;
+    } else {
+      lastVersionLog.preface = lastVersionLog.preface ? lastVersionLog.preface + ' ' + line : line;
+    }
+
 
   }
 
