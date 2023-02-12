@@ -5,6 +5,7 @@ Changelog
 ------------------
 
 * Implemented the 'format' command.
+* Implemented "parse" command.
 
 
 0.3.0 (2023-02-12)

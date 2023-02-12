@@ -50,10 +50,13 @@ async function main() {
     case 'init' :
       await init();
       break;
-      /*
     case 'add' :
-      await add();
+      if (positionals.length < 2) {
+        throw new Error('The "message" argument must be specified with the "add" command');
+      }
+      await add(positionals.slice(1).join(' '));
       break;
+      /*
     case 'release' :
       await release();
       break;
@@ -112,13 +115,13 @@ https://github.com/evert/changelog-tool
 async function init() {
 
   if (await exists(filename)) {
-    throw new Error(`A file named ${filename} already exists`); 
+    throw new Error(`A file named ${filename} already exists`);
   }
 
   const changelog = new Changelog();
   const version = new VersionLog(await readPackageVersion());
   version.add('New project!');
-  changelog.versions.push(version); 
+  changelog.versions.push(version);
 
   await fs.writeFile(filename, changelog.toString());
   console.log(`${filename} created`);
@@ -167,6 +170,22 @@ async function format() {
   console.log(`${changelog.versions.length} changelogs saved to ${filename}`);
 }
 
+/**
+ * @param {string} message
+ */
+async function add(message) {
+  const changelog = await parseChangelog();
+
+  let lastVersion = changelog.versions[0];
+  if (lastVersion.date) {
+    lastVersion = changelog.newVersion();
+    console.log('Creating new version: %s', lastVersion);
+  }
+  lastVersion.add(message);
+
+  await fs.writeFile(filename, changelog.toString());
+  console.log(`${changelog.versions.length} changelogs saved to ${filename}`);
+}
 
 /**
  * @returns {Promise<Changelog>}
@@ -180,4 +199,3 @@ async function parseChangelog() {
   return await parseFile(filename);
 
 }
-

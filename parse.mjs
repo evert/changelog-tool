@@ -66,7 +66,7 @@ export function parse(changelogInput) {
       } else {
         versionLog.date = matches[2];
       }
-      changelog.add(versionLog);
+      changelog.versions.push(versionLog);
       lastVersionLog = versionLog;
       lastBullet = null;
       idx++;
