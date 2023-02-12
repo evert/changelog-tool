@@ -27,15 +27,37 @@ export function parse(changelogInput) {
   const changelog = new Changelog();
   changelog.title = lines[0];
 
+  let lastVersionLog = null;
+  let lastBullet = null;
+
   for(let idx=2; idx<lines.length; idx++) {
 
+    const line = lines[idx];
+
+    if (line.startsWith('* ')) {
+      // Found a bullet point
+      if (!lastVersionLog) {
+        throw new Error(`Parse error: found a bullet point * outside of a level 2 heading on line ${idx+1}`);
+      }
+      lastBullet = lastVersionLog.add(line.substr(1).trim());
+      continue;
+    }
+    if (line.startsWith('  ')) {
+      // Continuation of last line.
+      if (!lastBullet) {
+        throw new Error(`Parse error: unexpected indented string on line ${line+1}`);
+      }
+      lastBullet.message += ' ' + line.trim();
+      continue;
+    }
+
+    // Look to the next line for ----
     if (lines[idx+1]?.match(/^-{1,}$/)) {
       // Found a new Version
-      const versionTitle = lines[idx];
-      const matches = versionTitle.match(/^([0-9\.]{3,}(?:-(?:alpha|beta)\.[0-9])?) \(([0-9]{4}-[0-9]{2}-[0-9]{2}|\?\?\?\?-\?\?-\?\?)\)$/);
+      const matches = line.match(/^([0-9\.]{3,}(?:-(?:alpha|beta)\.[0-9])?) \(([0-9]{4}-[0-9]{2}-[0-9]{2}|\?\?\?\?-\?\?-\?\?)\)$/);
 
       if (!matches) {
-        throw new Error(`A version title must have the format "1.0.0 (YYYY-MM-DD)" or "1.0.0 (????-??-??)" for unreleased versions. We found: "${lines[idx]}"`);
+        throw new Error(`A version title must have the format "1.0.0 (YYYY-MM-DD)" or "1.0.0 (????-??-??)" for unreleased versions. We found: "${line}"`);
       }
 
       const versionLog = new VersionLog(matches[1]);
@@ -45,6 +67,8 @@ export function parse(changelogInput) {
         versionLog.date = matches[2];
       }
       changelog.add(versionLog);
+      lastVersionLog = versionLog;
+      lastBullet = null;
 
     }
 
