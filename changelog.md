@@ -1,7 +1,8 @@
 Changelog
 =========
 
-0.4.0 (????-??-??)
+
+0.4.0 (2023-02-12)
 ------------------
 
 * Implemented the "format", "parse" and "release" commands.

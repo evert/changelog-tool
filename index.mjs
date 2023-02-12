@@ -177,7 +177,7 @@ async function add(message) {
   let lastVersion = changelog.versions[0];
   if (lastVersion.date) {
     lastVersion = changelog.newVersion();
-    console.log('Creating new version: %s', lastVersion);
+    console.log('Creating new version: %s', lastVersion.version);
   }
   lastVersion.add(message);
 
