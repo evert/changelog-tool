@@ -8,8 +8,6 @@ Changelog
   `--minor` arguments.
 * The `add` command now uses the -m argument instead of a positional for the
   message.
-* bla
-* bla
 
 
 0.4.1 (2023-02-12)
