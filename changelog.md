@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.7.1 (????-??-??)
+0.7.1 (2023-02-14)
 ------------------
 
 * Bug: forgot to commit the release
