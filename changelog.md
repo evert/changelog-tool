@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.7.0 (????-??-??)
+0.7.0 (2023-02-14)
 ------------------
 
 * The "release" command now automatically commits and and creates a git tag,
