@@ -7,7 +7,6 @@
     "checkJs": true,
 
     "moduleResolution": "node",
-    "resolveJsonModule": true,
      
     "noEmit": true,
     "strict": true,

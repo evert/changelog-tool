@@ -2,9 +2,11 @@
   "name": "changelog-tool",
   "version": "0.5.0",
   "description": "A CLI tool for manipulating changelogs",
+  "type": "module",
   "main": "index.mjs",
   "scripts": {
-    "test": "node --test"
+    "test": "node --test",
+    "watch": "tsc --watch"
   },
   "keywords": [
     "changelog",

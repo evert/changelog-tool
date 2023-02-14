@@ -1,3 +1,4 @@
+// @ts-check
 import { test } from 'node:test';
 import { parse } from '../parse.mjs';
 import * as assert from 'node:assert';
