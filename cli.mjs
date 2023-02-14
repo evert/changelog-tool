@@ -255,6 +255,7 @@ async function release() {
   }
   if (useGit) {
     runCommand(`git add --all`);
+    runCommand(`git commit -m "Releasing ${lastVersion.version}"`);
     runCommand(`git tag v${lastVersion.version}`);
   }
 
