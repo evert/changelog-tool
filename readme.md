@@ -88,3 +88,9 @@ npm version [version] --no-git-tag-version
 
 This command adjust the `version` field in `package.json` to match the latest
 changelog version.
+
+If the tool detects if this is a git directory, it will also:
+
+* Ensure that the working directory is clean.
+* Commit the changes.
+* Create a tag with `git tag v[version]`.

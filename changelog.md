@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.7.0 (????-??-??)
+------------------
+
+* The "release" command now automatically commits and and creates a git tag,
+  much like `npm version`
+
+
 0.6.0 (2023-02-14)
 ------------------
 

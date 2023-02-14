@@ -3,7 +3,7 @@
 import { parseArgs } from 'node:util';
 import * as fs from 'node:fs/promises';
 import * as url from 'node:url';
-import { readPackageVersion, exists, calculateNextVersion } from './util.mjs';
+import { readPackageVersion, exists, calculateNextVersion, isGit, isGitClean, runCommand } from './util.mjs';
 import { Changelog, VersionLog, LogItem } from './changelog.mjs';
 import { parseFile } from './parse.mjs';
 import { execSync } from 'node:child_process';
@@ -236,13 +236,26 @@ async function release() {
   }
   lastVersion.date = new Date().toISOString().substr(0,10);
   console.log(`Releasing ${lastVersion.version}`);
+
+  const useGit = await isGit();
+
+  if (useGit) {
+    if (!await isGitClean()) {
+      throw new Error('Current git working directory is not clean. Please commit your changes first');
+    }
+  }
+
   await fs.writeFile(filename, changelog.toString());
   console.log(`${changelog.versions.length} changelogs saved to ${filename}`);
 
   if (await exists('package.json')) {
-    const command = `npm version "${lastVersion.version}" --no-git-tag-version`;
-    console.log(command);
-    execSync(command);
+    runCommand(
+      `npm version "${lastVersion.version}" --no-git-tag-version`
+    );
+  }
+  if (useGit) {
+    runCommand(`git add --all`);
+    runCommand(`git tag v${lastVersion.version}`);
   }
 
 }
