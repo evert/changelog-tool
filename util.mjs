@@ -1,5 +1,7 @@
 // @ts-check
+import { execSync } from 'node:child_process';
 import * as fs from 'node:fs/promises';
+import * as path from 'node:path';
 
 /**
  * Checks if a file exists
@@ -106,5 +108,34 @@ export function calculateNextVersion(prevVersion, changeType = 'patch') {
   }
 
   return parts.join('.');
+
+}
+
+/**
+ * Returns true if we're in a git-powered directory
+ *
+ * @returns {Promise<boolean>}
+ */
+export async function isGit() {
+
+  let currentPath = process.cwd();
+  while(currentPath!=='/') {
+    if (await exists(path.join(currentPath,'.git'))) {
+      return true;
+    }
+    currentPath = path.dirname(currentPath);
+  }
+  return false;
+
+}
+
+/**
+ * @param {string} command
+ * @returns {string}
+ */
+export function runCommand(command) {
+
+  process.stderr.write(command + '\n');
+  return execSync(command).toString('utf-8');
 
 }
