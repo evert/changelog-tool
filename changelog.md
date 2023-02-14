@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.6.0 (????-??-??)
+0.6.0 (2023-02-14)
 ------------------
 
 * The release command now automatically calls "npm version" if a package.json
