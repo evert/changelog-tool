@@ -139,3 +139,15 @@ export function runCommand(command) {
   return execSync(command).toString('utf-8');
 
 }
+
+/**
+ * Returns true if the current working directory is clean.
+ *
+ * @returns {boolean}
+ */
+export function isGitClean() {
+
+  const result = execSync('git status --porcelain=v1').toString('utf-8');
+  return result.trim().length === 0;
+
+}
