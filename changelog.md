@@ -1,6 +1,15 @@
 Changelog
 =========
 
+0.6.0 (????-??-??)
+------------------
+
+* The release command now automatically calls "npm version" if a package.json
+  was found in the project directory
+* Bug fix: the --major and --minor arguments were ignored when using "add" to
+  create a new version log
+
+
 0.5.0 (2023-02-12)
 ------------------
 
