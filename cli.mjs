@@ -6,6 +6,7 @@ import * as url from 'node:url';
 import { readPackageVersion, exists, calculateNextVersion } from './util.mjs';
 import { Changelog, VersionLog, LogItem } from './changelog.mjs';
 import { parseFile } from './parse.mjs';
+import { execSync } from 'node:child_process';
 
 const filename = 'changelog.md';
 
@@ -78,7 +79,7 @@ async function main() {
         changeType = 'major';
       }
       if (!values.message) {
-        throw new Error('The "-m" or "-message" argument is required');
+        throw new Error('The "-m" or "--message" argument is required');
       }
       await add({
         message: values.message,
@@ -237,6 +238,12 @@ async function release() {
   console.log(`Releasing ${lastVersion.version}`);
   await fs.writeFile(filename, changelog.toString());
   console.log(`${changelog.versions.length} changelogs saved to ${filename}`);
+
+  if (await exists('package.json')) {
+    const command = `npm version "${lastVersion.version}" --no-git-tag-version`;
+    console.log(command);
+    execSync(command);
+  }
 
 }
 

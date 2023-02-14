@@ -38,13 +38,13 @@ export class Changelog {
    * Adds a new version to the log. Version string is automatically increased
    * from the previous one
    *
-   * @params {'patch'|'minor'|'major'} changeType
+   * @param {'patch'|'minor'|'major'} changeType
    * @returns {VersionLog}
    */
   newVersion(changeType = 'patch') {
 
     const lastVersion = this.versions[0].version;
-    const newVersion = calculateNextVersion(lastVersion);
+    const newVersion = calculateNextVersion(lastVersion, changeType);
     const versionLog = new VersionLog(newVersion);
 
     return this.add(versionLog);

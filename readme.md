@@ -26,7 +26,7 @@ Installation
 ------------
 
 ```sh
-npm install changelog-tool --save-dev
+npm install changelog-tool --global
 ```
 
 CLI
@@ -36,33 +36,55 @@ To tool can be used programmatically and with the CLI. The CLI has the
 following commands:
 
 ```
-npx changelog init             - Create a new, empty npx changelog.
-npx changelog add -m [message] - Adds a new line to the npx changelog.
-npx changelog release          - Marks the current npx changelog as released.
-npx changelog show             - Show the last npx changelog.
-npx changelog show [version]   - Show the npx changelog of a specific version.
-npx changelog list             - List all versions in the npx changelog.
-npx changelog format           - Reformats the npx changelog in the standard format.
+changelog init             - Create a new, empty npx changelog.
+changelog add -m [message] - Adds a new line to the npx changelog.
+changelog release          - Marks the current npx changelog as released.
+changelog show             - Show the last npx changelog.
+changelog show [version]   - Show the npx changelog of a specific version.
+changelog list             - List all versions in the npx changelog.
+changelog format           - Reformats the npx changelog in the standard format.
 ```
 
-### Invoking add
+### 'add' command
 
-Easiest is to just run:
+The add comment lets you add a new message at the bottom of the last unreleased
+version.
 
-```
-npx changelog add -m "Bug fix"
-```
-
-This will automatically add a line to the latest unreleased version. If there
-is no unreleased version, it will create a new patch version.
-
-If the change should cause a minor or major version bump, you can specify the
-these options too:
+To use it, just run:
 
 ```
-npx changelog add --minor -m "New feature"
-npx changelog add --major -m "Backwards compatibility break"
+changelog add -m "Bug fix"
+```
+
+If there is no unreleased version, it will create a new section and increase
+the version number.
+
+If the current change should result in a new major or minor version number, you
+can use the following arguments.
+
+```
+changelog add --minor -m "New feature"
+changelog add --major -m "Backwards compatibility break"
 ```
 
 These settings will automatically adjust the version string of the most recent
 unreleased version.
+
+### 'release' command
+
+The release command will look for a recent unreleased version in the changelog
+(where the date is marked `????-??-??`) and change it to the current date:
+
+```
+changelog release
+```
+
+If the tool detects a `package.json` file in the current directory, it will
+also call:
+
+```
+npm version [version] --no-git-tag-version
+```
+
+This command adjust the `version` field in `package.json` to match the latest
+changelog version.
