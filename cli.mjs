@@ -49,6 +49,10 @@ async function main() {
         type: 'boolean',
         description: 'Indicates that the current change is a major change.',
       },
+      nowrap: {
+        type: 'boolean',
+        description: 'Don\'t wrap "show" output'
+      }
     },
     allowPositionals: true,
   });
@@ -93,7 +97,11 @@ async function main() {
       await format();
       break;
     case 'show' :
-      await show({ all: !!values.all, version: positionals[1]});
+      await show({
+        all: !!values.all,
+        version: positionals[1],
+        noWrap: !!values.nowrap
+      });
       break;
     case 'list' :
       await list();
@@ -170,8 +178,9 @@ async function list() {
  * @param {Object} showOptions
  * @param {boolean} showOptions.all Show all versions
  * @param {string?} showOptions.version show a specific version
+ * @param {boolean?} showOptions.noWrap don't line-wrap output
  */
-async function show({all, version}) {
+async function show({all, version, noWrap}) {
 
   const changelog = await parseChangelog();
 
@@ -186,7 +195,7 @@ async function show({all, version}) {
 
   console.log(
     toRender
-      .map( log => log.toString())
+      .map( log => log.output(!noWrap))
       .join('\n\n')
   );
 

@@ -1,6 +1,14 @@
 Changelog
 =========
 
+0.7.2 (????-??-??)
+------------------
+
+* Added a `--nowrap` option to `show`, which doesn't wrap long lines. This is
+  useful for copy-pasting changelog into places where linebreaks are
+  significant, such as the Github releases section.
+
+
 0.7.1 (2023-02-14)
 ------------------
 

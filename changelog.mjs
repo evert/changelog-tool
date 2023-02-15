@@ -116,15 +116,28 @@ export class VersionLog {
 
   toString() {
 
+    return this.output();
+
+  }
+
+  /**
+   * Renders the changelog as a string.
+   *
+   * @param {boolean} lineWrap
+   * @returns {string}
+   */
+  output(lineWrap = true) {
+
+    const lineLength = lineWrap ? 79 : Infinity;
     const title = this.version + ' (' + (this.date ?? '????-??-??') + ')';
     return (
       title + '\n' +
       ('-'.repeat(title.length)) + '\n' +
-      (this.preface ? '\n' + wrap(this.preface) : '') +
+      (this.preface ? '\n' + wrap(this.preface, 0, lineLength) : '') +
       '\n' +
-      this.items.map(version => version.toString()).join('\n') +
+      this.items.map(version => version.output(lineWrap)).join('\n') +
       '\n' +
-      (this.postface ? '\n' + wrap(this.postface) + '\n' : '')
+      (this.postface ? '\n' + wrap(this.postface, 0, lineLength) + '\n' : '')
     );
 
   }
@@ -143,6 +156,17 @@ export class LogItem {
    */
   constructor(message) {
     this.message = message;
+  }
+
+  /**
+   * Renders the changelog as a string.
+   *
+   * @param {boolean} lineWrap
+   * @returns {string}
+   */
+  output(lineWrap = true) {
+    const lineLength = lineWrap ? 79 : Infinity;
+    return wrap('* ' + this.message, 2, lineLength);
   }
 
   toString() {
