@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.7.2 (????-??-??)
+------------------
+
+* Here's a super long line thats meant to wrap to the next line. Hopefully this
+  will happen
+
+
 0.7.1 (2023-02-14)
 ------------------
 
