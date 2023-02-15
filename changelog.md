@@ -4,8 +4,9 @@ Changelog
 0.7.2 (????-??-??)
 ------------------
 
-* Here's a super long line thats meant to wrap to the next line. Hopefully this
-  will happen
+* Added a `--nowrap` option to `show`, which doesn't wrap long lines. This is
+  useful for copy-pasting changelog into places where linebreaks are
+  significant, such as the Github releases section.
 
 
 0.7.1 (2023-02-14)
