@@ -8,6 +8,7 @@ Changelog
   useful for copy-pasting changelog into places where linebreaks are
   significant, such as the Github releases section.
 * Support multiple digits for the alpha/beta release string.
+* Also allows setting the changelog message as positional arguments.
 
 
 0.7.1 (2023-02-14)

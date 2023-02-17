@@ -83,7 +83,12 @@ async function main() {
         changeType = 'major';
       }
       if (!values.message) {
-        throw new Error('The "-m" or "--message" argument is required');
+        if (positionals.length>1) {
+          // We also support setting a message after the command instead of -m
+          values.message = positionals.slice(1).join(' ');
+        } else {
+          throw new Error('The "-m" or "--message" argument is required');
+        }
       }
       await add({
         message: values.message,
