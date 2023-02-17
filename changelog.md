@@ -7,6 +7,7 @@ Changelog
 * Added a `--nowrap` option to `show`, which doesn't wrap long lines. This is
   useful for copy-pasting changelog into places where linebreaks are
   significant, such as the Github releases section.
+* Support multiple digits for the alpha/beta release string.
 
 
 0.7.1 (2023-02-14)
