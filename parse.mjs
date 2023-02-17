@@ -54,7 +54,7 @@ export function parse(changelogInput) {
     // Look to the next line for ----
     if (lines[idx+1]?.match(/^-{1,}$/)) {
       // Found a new Version
-      const matches = line.match(/^([0-9\.]{3,}(?:-(?:alpha|beta)\.[0-9])?) \(([0-9]{4}-[0-9]{2}-[0-9]{2}|\?\?\?\?-\?\?-\?\?)\)$/);
+      const matches = line.match(/^([0-9\.]{3,}(?:-(?:alpha|beta)\.[0-9]+)?) \(([0-9]{4}-[0-9]{2}-[0-9]{2}|\?\?\?\?-\?\?-\?\?)\)$/);
 
       if (!matches) {
         throw new Error(`A version title must have the format "1.0.0 (YYYY-MM-DD)" or "1.0.0 (????-??-??)" for unreleased versions. We found: "${line}"`);
