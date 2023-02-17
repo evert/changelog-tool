@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.7.2 (????-??-??)
+0.7.2 (2023-02-17)
 ------------------
 
 * Added a `--nowrap` option to `show`, which doesn't wrap long lines. This is
