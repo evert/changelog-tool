@@ -8,6 +8,9 @@ This tool currently expects to work with a file named 'changelog.md' in the
 current working directory. This is a markdown file that looks like this:
 
 ```
+Changelog
+=========
+
 0.4.0 (????-??-??)
 ------------------
 

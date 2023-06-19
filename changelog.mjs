@@ -141,7 +141,7 @@ export class VersionLog {
     return (
       title + '\n' +
       ('-'.repeat(title.length)) + '\n' +
-      (this.preface ? '\n' + wrap(this.preface, 0, lineLength) : '') +
+      (this.preface ? '\n' + wrap(this.preface, 0, lineLength) + '\n' : '') +
       '\n' +
       this.items.map(version => version.output(lineWrap)).join('\n') +
       '\n' +

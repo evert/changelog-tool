@@ -4,7 +4,8 @@ Changelog
 1.0.0 (????-??-??)
 ------------------
 
-* First stable release! Just kidding, it was already stable.
+First stable release! Just kidding, it was already stable.
+
 * Add support for [Markdown reference links][1]. References are a Markdown
   feature that lets you write links in paragraphs, but put the actual target
   near the end of the document similar to references in technical documents.
