@@ -13,6 +13,8 @@ First stable release! Just kidding, it was already stable.
   sources. The tool doesn't let you quickly add links via the CLI yet, but it
   will no longer mangle them when they appear.
 * Testing Node 20
+* Bugfix: Always insert an empty line between the 'preface' and bulletpoints
+  sections of a version block.
 
 
 0.7.2 (2023-02-17)
