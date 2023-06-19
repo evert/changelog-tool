@@ -1,6 +1,17 @@
 Changelog
 =========
 
+0.8.0 (????-??-??)
+------------------
+
+* Add support for [Markdown reference links][1]. Rferences are a Markdown
+  feature that lets you write links in paragraphs, but put the actual target
+  near the end of the document similar to references in technical documents.
+  This can declutter the reading experience for those reading the Markdown
+  sources. The tool doesn't let you quickly add links via the CLI yet, but it
+  will no longer mangle them when they appear.
+
+
 0.7.2 (2023-02-17)
 ------------------
 
@@ -71,3 +82,6 @@ Changelog
 ------------------
 
 * Implemented the 'help' and 'init' commands.
+
+[1]: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links
+     "Markdown cheatsheet: Links"

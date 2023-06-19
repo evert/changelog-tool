@@ -83,7 +83,6 @@ Well, that's all folks.
 *
 `;
 
-  debugger;
   const result = await parse(input);
 
   const latest = result.get('0.2.0');
@@ -91,5 +90,46 @@ Well, that's all folks.
   assert.equal('WOW another release. How good is that? Here\'s another line.', latest.preface);
   assert.equal('Well, that\'s all folks.', latest.postface);
 
+
+});
+
+test('Link references', async() => {
+
+
+  const input = `Changesss
+=========
+
+0.2.0 (????-??-??)
+------------------
+
+WOW another release. How good is that?
+Here's another line.
+
+* Implemented the 'list' command.
+* Added testing framework. See [the blog post][1] for more information.
+
+0.1.0 (2023-02-08)
+------------------
+
+* Implemented the ['help'][2] and 'init' commands.
+
+[1]: https://evertpot.com/ "My Blog"
+[2]: https://indieweb.social/@evert "My Mastodon account, but it's split
+  over two lines"
+`;
+
+  debugger;
+  const result = await parse(input);
+
+  assert.deepEqual({
+    name: '1',
+    href: 'https://evertpot.com/',
+    title: 'My Blog',
+  }, result.links[0]);
+  assert.deepEqual({
+    name: '2',
+    href: 'https://indieweb.social/@evert',
+    title: 'My Mastodon account, but it\'s split over two lines',
+  }, result.links[1]);
 
 });

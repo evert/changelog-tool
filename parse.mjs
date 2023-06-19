@@ -14,6 +14,10 @@ export async function parseFile(filename) {
 
 }
 
+const linkReferenceRe = /^\[([a-zA-Z0-9])+\]:/;
+const versionRe = /^([0-9\.]{3,}(?:-(?:alpha|beta)\.[0-9]+)?) \(([0-9]{4}-[0-9]{2}-[0-9]{2}|\?\?\?\?-\?\?-\?\?)\)$/;
+
+
 /**
  * @param {string} changelogInput
  * @returns {Changelog}
@@ -51,10 +55,31 @@ export function parse(changelogInput) {
       continue;
     }
 
+    // Look for link references
+    if (linkReferenceRe.test(line)) {
+
+      let linkRefLine = line;
+      while(lines[idx+1]?.match(/^\W\W/)) {
+        // If the line was folded over multiple lines, read those too.
+        linkRefLine += ' ' + lines[idx+1].trim();
+        idx++;
+      }
+      const name = linkRefLine.match(linkReferenceRe)?.[1];
+      const href = linkRefLine.split(' ')[1];
+      const title = linkRefLine.includes('"') ? linkRefLine.substring(linkRefLine.indexOf('"')+1,linkRefLine.lastIndexOf('"')) : null;
+      changelog.links.push({
+        name: /** @type {string} */(name),
+        href,
+        title
+      });
+      continue;
+
+    }
+
     // Look to the next line for ----
     if (lines[idx+1]?.match(/^-{1,}$/)) {
       // Found a new Version
-      const matches = line.match(/^([0-9\.]{3,}(?:-(?:alpha|beta)\.[0-9]+)?) \(([0-9]{4}-[0-9]{2}-[0-9]{2}|\?\?\?\?-\?\?-\?\?)\)$/);
+      const matches = line.match(versionRe);
 
       if (!matches) {
         throw new Error(`A version title must have the format "1.0.0 (YYYY-MM-DD)" or "1.0.0 (????-??-??)" for unreleased versions. We found: "${line}"`);

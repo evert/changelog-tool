@@ -10,13 +10,21 @@ export class Changelog {
    */
   versions = [];
 
+  /**
+   * @type {Link[]}
+   */
+  links = [];
+
   toString() {
 
     return (
       this.title + '\n' +
       ('='.repeat(this.title.length)) + '\n' +
       '\n' +
-      this.versions.map(version => version.toString()).join('\n\n')
+      this.versions.map(version => version.toString()).join('\n\n') +
+
+      // Sorry about this line future me (or someone else)
+      (this.links.length > 0 ? ('\n' + this.links.map( link => wrap(`[${link.name}]: ${link.href}${link.title?` "${link.title}"`:''}`, link.name.length+4)).join('\n') + '\n') : '')
     );
 
   }
@@ -147,7 +155,7 @@ export class VersionLog {
 export class LogItem {
 
   /**
-   * @type string
+   * @type {string}
    */
   message;
 
@@ -177,4 +185,9 @@ export class LogItem {
 
 }
 
-
+/**
+ * @typedef Link {Object}
+ * @property Link.href {string}
+ * @property Link.name {string}
+ * @property Link.title {string|null}
+ */
