@@ -1,11 +1,10 @@
 Changelog
 =========
 
-1.0.0 (????-??-??)
+1.0.0 (2023-06-20)
 ------------------
 
 First stable release! Just kidding, it was already stable.
-
 * Add support for [Markdown reference links][1]. References are a Markdown
   feature that lets you write links in paragraphs, but put the actual target
   near the end of the document similar to references in technical documents.
@@ -86,7 +85,6 @@ First stable release! Just kidding, it was already stable.
 0.1.0 (2023-02-08)
 ------------------
 
-* Implemented the 'help' and 'init' commands.
+* Implemented the 'help' and 'init' commands. "Markdown cheatsheet: Links"
 
 [1]: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links
-     "Markdown cheatsheet: Links"
