@@ -4,9 +4,16 @@
   "description": "A CLI tool for manipulating changelogs",
   "type": "module",
   "main": "index.mjs",
+  "homepage": "https://github.com/evert/changelog-tool",
+  "author": "Evert Pot (https://evertpot.com/)",
+  "license": "MIT",
   "scripts": {
     "test": "node --test",
     "watch": "tsc --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:evert/changelog-tool.git"
   },
   "keywords": [
     "changelog",
