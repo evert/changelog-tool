@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0.1 (????-??-??)
+1.0.1 (2023-06-30)
 ------------------
 
 * Fix bug in parsing link references with more than 1 character

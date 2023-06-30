@@ -1,6 +1,6 @@
 {
   "name": "changelog-tool",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A CLI tool for manipulating changelogs",
   "type": "module",
   "main": "index.mjs",
@@ -19,8 +19,6 @@
     "changelog",
     "markdown"
   ],
-  "author": "Evert Pot (https://evertpot.com/)",
-  "license": "MIT",
   "engine": {
     "node": ">16"
   },
