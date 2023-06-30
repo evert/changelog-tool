@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.0.1 (????-??-??)
+------------------
+
+* Fix bug in parsing link references with more than 1 character
+
+
 1.0.0 (2023-06-20)
 ------------------
 
@@ -88,5 +94,5 @@ First stable release! Just kidding, it was already stable.
 
 * Implemented the 'help' and 'init' commands
 
-[1]: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#link "Markdown cheatsheet: Links"
-
+[1]: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#link
+     "Markdown cheatsheet: Links"

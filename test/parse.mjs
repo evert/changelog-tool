@@ -116,9 +116,9 @@ Here's another line.
 [1]: https://evertpot.com/ "My Blog"
 [2]: https://indieweb.social/@evert "My Mastodon account, but it's split
   over two lines"
+[blabla]: http://example
 `;
 
-  debugger;
   const result = await parse(input);
 
   assert.deepEqual({
@@ -131,5 +131,10 @@ Here's another line.
     href: 'https://indieweb.social/@evert',
     title: 'My Mastodon account, but it\'s split over two lines',
   }, result.links[1]);
+  assert.deepEqual({
+    name: 'blabla',
+    href: 'http://example',
+    title: null,
+  }, result.links[2]);
 
 });

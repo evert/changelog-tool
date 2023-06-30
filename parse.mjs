@@ -14,7 +14,7 @@ export async function parseFile(filename) {
 
 }
 
-const linkReferenceRe = /^\[([a-zA-Z0-9])+\]:/;
+const linkReferenceRe = /^\[([a-zA-Z0-9]+)\]:/;
 const versionRe = /^([0-9\.]{3,}(?:-(?:alpha|beta)\.[0-9]+)?) \(([0-9]{4}-[0-9]{2}-[0-9]{2}|\?\?\?\?-\?\?-\?\?)\)$/;
 
 
