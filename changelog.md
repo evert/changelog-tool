@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.1.0 (????-??-??)
+1.1.0 (2025-05-12)
 ------------------
 
 * Added `--force` flag, which ignores errors when calling changelog release.
