@@ -6,7 +6,6 @@ import * as url from 'node:url';
 import { readPackageVersion, exists, calculateNextVersion, isGit, isGitClean, runCommand } from './util.mjs';
 import { Changelog, VersionLog, LogItem } from './changelog.mjs';
 import { parseFile } from './parse.mjs';
-import { execSync } from 'node:child_process';
 
 const filename = 'changelog.md';
 
@@ -52,7 +51,11 @@ async function main() {
       nowrap: {
         type: 'boolean',
         description: 'Don\'t wrap "show" output'
-      }
+      },
+      force: {
+        type: 'boolean',
+        description: 'Ignore some errors and try anyway.',
+      },
     },
     allowPositionals: true,
   });
@@ -241,7 +244,7 @@ async function add({message, changeType}) {
   console.log(`${changelog.versions.length} changelogs saved to ${filename}`);
 }
 
-async function release() {
+async function release(force = false) {
   const changelog = await parseChangelog();
 
   let lastVersion = changelog.versions[0];
@@ -254,8 +257,12 @@ async function release() {
   const useGit = await isGit();
 
   if (useGit) {
-    if (!await isGitClean()) {
-      throw new Error('Current git working directory is not clean. Please commit your changes first');
+    if (!isGitClean()) {
+      if (force) {
+        console.warn('Warning: Git working directory is not clean. Ignoring.');
+      } else {
+        throw new Error('Current git working directory is not clean. Please commit your changes first');
+      }
     }
   }
 
