@@ -1,10 +1,13 @@
 Changelog
 =========
 
-1.1.0 (2025-05-12)
+1.2.0 (2025-05-12)
 ------------------
 
 * Added `--force` flag, which ignores errors when calling changelog release.
+
+Note: v1.1.0 was skipped. A few years ago this version was accidentally
+published on NPM so we need to skip it.
 
 
 1.0.1 (2023-06-30)
