@@ -99,7 +99,7 @@ async function main() {
       });
       break;
     case 'release' :
-      await release();
+      await release(values.force);
       break;
     case 'format' :
       await format();
