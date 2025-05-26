@@ -1,6 +1,6 @@
 {
   "name": "changelog-tool",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A CLI tool for manipulating changelogs",
   "type": "module",
   "main": "index.mjs",

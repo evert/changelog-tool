@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.2.1 (????-??-??)
+1.2.1 (2025-05-26)
 ------------------
 
 * New --force flag was being ignored.
